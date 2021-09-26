@@ -20,7 +20,7 @@ This repository provides a user-oriented software tool. As a benchmarking platfo
 - Fairness of Exposure in Rankings (FOEIR): [Paper](https://arxiv.org/abs/1802.07281)
 - The Actionable Classification and Fairness project (not published yet)
 
-### Availbale Ranking factors
+### Available Ranking factors
 
 - prediction probability of being negatively classified
 - distance to a counterfactual explanation 
