@@ -31,7 +31,7 @@ This repository provides a user-oriented software tool. As a benchmarking platfo
 - Average distance between the original point and its counterfactual explanation (Proximity) 
 - Sparsity 
 - Closeness to the training data
-- Normalised dis- counted KL-divergence (rKL)
+- Normalised discounted KL-divergence (rKL)
 - Normalized discounted difference (rND)
 - Normalized discounted ratio (rRD) 
 - Average time required for the ranking algorithm
