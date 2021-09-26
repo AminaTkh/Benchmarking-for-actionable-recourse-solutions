@@ -1,0 +1,3 @@
+Dataset,User_N,SensitiveATT,Pro_N,Pro_percent,TargetAtt,Alpha,rKL,rND,rRD
+german,65,attr_val,23,35,score,,0.050632616171330636,0.19449229172171986,0.0
+credit,1446,attr_val,838,58,score,,0.12920681659409874,0.247580724012454,0.042197629117656385

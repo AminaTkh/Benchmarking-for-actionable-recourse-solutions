@@ -38,7 +38,7 @@ def measureratio (input_fn, st, filee):
 		ex = "input_costs_credit.xlsx"
 		d_name = "credit"
 	
-	fileofinitrank = 'initialrankings/' + d_name + 'AC'
+	fileofinitrank = 'baselinerankings/' + d_name + 'AC'
 
 	if input_fn.find('prob') != -1:
 		fileofinitrank = fileofinitrank + 'prob.csv'
@@ -49,41 +49,40 @@ def measureratio (input_fn, st, filee):
 	ex = "cost/" + ex	
 	costs = pd.read_excel(ex)
 
-	if input_fn.find('initial')!= -1 and input_fn.find('dist')!= -1:
+	if input_fn.find('baseline')!= -1 and input_fn.find('dist')!= -1:
 	#simple case
 		df = pd.read_csv(input_fn)
 		value = df.groupby(['attr_val'])['score'].mean()
 		#print(value)
-		print(value.min() / value.max())
-		filee.write(st + 'init,init,' + str(value.min() / value.max()) + ',init,init' + '\n')
+		#print(value.min() / value.max())
+		filee.write(st + 'init,init,' + str(value.min() / value.max()) + '\n')
 		
 		
-	if input_fn.find('initial')!= -1 and input_fn.find('prob')!= -1:
+	if input_fn.find('baseline')!= -1 and input_fn.find('prob')!= -1:
 		df = pd.read_csv(input_fn)
 		costs_per_group_after = costpergroup(df, costs.iloc[:, 1], True)
 		mean_group_costs_after = {group: mean(
             costs) for group, costs in costs_per_group_after.items()}
 		#print(mean_group_costs_after)
-		print(min(mean_group_costs_after.values())/max(mean_group_costs_after.values()))
-		filee.write(st + 'init,init,' + str(min(mean_group_costs_after.values())/max(mean_group_costs_after.values())) + ',init,init' + '\n')
+		#print(min(mean_group_costs_after.values())/max(mean_group_costs_after.values()))
+		filee.write(st + 'init,init,' + str(min(mean_group_costs_after.values())/max(mean_group_costs_after.values())) + '\n')
 		
 	
-	if input_fn.find('initial') == -1:	
+	if input_fn.find('baseline') == -1:	
 		for proportion_modifier in range(2,9):
 			for number_of_blocks in range(1,8):
 				df = pd.read_csv(input_fn+str(number_of_blocks) + '.' + str(proportion_modifier)+'.csv')
 				costs_per_group_after = costpergroup(df, costs.iloc[:, 1], (input_fn.find('prob')!= -1))
 				mean_group_costs_after = {group: mean(costs) for group, costs in costs_per_group_after.items()}
-				print(number_of_blocks, ' ',proportion_modifier,' ')
-				print(min(mean_group_costs_after.values())/max(mean_group_costs_after.values()))
+				#print(number_of_blocks, ' ',proportion_modifier,' ')
+				#print(min(mean_group_costs_after.values())/max(mean_group_costs_after.values()))
 				sp = stats.spearmanr(df['datapoint'], init_d['datapoint'])
 				kt = stats.kendalltau(df['datapoint'], init_d['datapoint'])
-				filee.write(st  + str(number_of_blocks*5) + ',' + str(proportion_modifier) + ',' + str(min(mean_group_costs_after.values())/max(mean_group_costs_after.values())) + ',' + str(sp[0]) +',' + str(kt[0]) + '\n')
+				filee.write(st  + str(number_of_blocks*5) + ',' + str(proportion_modifier) + ',' + str(min(mean_group_costs_after.values())/max(mean_group_costs_after.values())) +  '\n')
 
 
 def getaverage(input_fn, d, r):
-#r = FAIR : every 4th
-#r = FOEIR : every 3
+
 	df = pd.read_csv(input_fn)
 	#print(df)
 	df = df[df['Dataset'] == d]
@@ -112,7 +111,7 @@ def getaverage(input_fn, d, r):
 		valuesrRD  = {'0.007' : alpha0_007['rRD'].mean(), '0.01' : alpha0_01['rRD'].mean(), '0.1' : alpha0_1['rRD'].mean(), '0.15' : alpha0_15['rRD'].mean()}
 
 
-	if r == 'INITIAL':
+	if r == 'BASELINE':
 		valuesrKL = {'init' : df['rKL'].mean()}		
 		valuesrND = {'init' :df['rND'].mean()}			
 		valuesrRD = {'init' :df['rRD'].mean()}	

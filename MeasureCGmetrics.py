@@ -65,16 +65,3 @@ def measureCEmetrics (input_fn):
 		distances, indices = nbrs.kneighbors(x_test)
 		print("The closeness to the training data is ", mean(distances[:,0]))
 	
-	"""
-	rmse_val = [] #to store rmse values for different k
-	for K in range(7):
-		K = K+1
-		model = neighbors.KNeighborsRegressor(n_neighbors = K)
-		model.fit(x_train, y_train)  #fit the model
-		pred = model.predict(x_test) #make prediction on test set
-		acc = accuracy_score(y_test, pred.round())
-		print("Accuracy value for k = ", K, " is", acc)
-		error = sqrt(mean_squared_error(y_test,pred)) #calculate rmse
-		rmse_val.append(error) #store rmse values
-		print('RMSE value for k= ' , K , 'is:', error)
-		"""
